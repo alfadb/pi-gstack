@@ -1,6 +1,7 @@
 ---
 name: cso
-description: Security audit. Infrastructure-first: secrets archaeology, dependency supply chain, CI/CD pipeline, webhook audit, LLM/AI security, skill supply chain, OWASP Top 10, STRIDE threat model. Two modes: daily (8/10 confidence gate) and comprehensive (2/10). Use when asked to "security audit", "threat model", "vulnerability scan", or "security review".
+description: |
+  Security audit: secrets archaeology, dependency supply chain, CI/CD pipeline, webhook audit, LLM/AI security, skill supply chain, OWASP Top 10, STRIDE threat model. Two modes: daily (8/10 confidence gate) and comprehensive (2/10). Use when asked to "security audit", "threat model", "vulnerability scan".
 allowed-tools: bash, read, grep, find, write
 compatibility: requires git
 ---
