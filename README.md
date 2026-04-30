@@ -28,6 +28,7 @@ git submodule add https://github.com/alfadb/pi-gstack agent/skills/pi-gstack
 | `/skill:review` | Staff Engineer | 分支 diff 审查：SQL 安全、竞态条件、shell 注入、范围漂移、完成度审计 |
 | `/skill:cso` | Chief Security Officer | 安全审计：OWASP Top 10、STRIDE 威胁模型、密钥扫描、供应链风险、CI/CD 安全、LLM 攻击面 |
 | `/skill:qa` | QA Lead | 浏览器测试：页面导航、交互测试、bug 修复、回归测试生成。需 Chrome + browser-tools |
+| `/skill:investigate` | Debugger | 系统调试：根因定位、假设验证、最小修复、回归测试，Iron Law：无根因不修复 |
 
 ## Prompt Templates（用户显式调用）
 
@@ -43,6 +44,7 @@ pi                       # 启动 pi
 /skill:review            # 审查 diff（模型也会主动建议）
 /skill:cso               # 安全审计
 /skill:qa https://...    # 浏览器 QA 测试
+/skill:investigate       # 调试 bug 根因
 ```
 
 ## 选择逻辑

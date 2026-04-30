@@ -9,6 +9,7 @@
 | `skills/review/SKILL.md` | Skill | `garrytan/gstack` `review/SKILL.md` | `e8893a1` (v1.20.0.0) | 2026-04-30 |
 | `skills/cso/SKILL.md` | Skill | `garrytan/gstack` `cso/SKILL.md` | `e8893a1` (v1.20.0.0) | 2026-04-30 |
 | `skills/qa/SKILL.md` | Skill | `garrytan/gstack` `qa/SKILL.md` | `e8893a1` (v1.20.0.0) | 2026-04-30 |
+| `skills/investigate/SKILL.md` | Skill | `garrytan/gstack` `investigate/SKILL.md` | `e8893a1` (v1.20.0.0) | 2026-04-30 |
 | `prompts/ship.md` | Template | `garrytan/gstack` `ship/SKILL.md` | `e8893a1` (v1.20.0.0) | 2026-04-30 |
 
 ## 跟进方法
