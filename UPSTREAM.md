@@ -4,12 +4,12 @@
 
 上游仓库已作为 submodule 存放在 `vendor/gstack/`。
 
-| pi-gstack 文件 | 上游来源 | 上游 commit | 迁移日期 |
-|---------------|---------|------------|---------|
-| `prompts/review.md` | `garrytan/gstack` `review/SKILL.md` | `e8893a1` (v1.20.0.0, 2026-04-28) | 2026-04-30 |
-| `prompts/cso.md` | `garrytan/gstack` `cso/SKILL.md` | `e8893a1` (v1.20.0.0, 2026-04-28) | 2026-04-30 |
-| `prompts/ship.md` | `garrytan/gstack` `ship/SKILL.md` | `e8893a1` (v1.20.0.0, 2026-04-28) | 2026-04-30 |
-| `prompts/qa.md` | `garrytan/gstack` `qa/SKILL.md` | `e8893a1` (v1.20.0.0, 2026-04-28) | 2026-04-30 |
+| pi-gstack 文件 | 形式 | 上游来源 | 上游 commit | 迁移日期 |
+|---------------|------|---------|------------|---------|
+| `skills/review/SKILL.md` | Skill | `garrytan/gstack` `review/SKILL.md` | `e8893a1` (v1.20.0.0) | 2026-04-30 |
+| `skills/cso/SKILL.md` | Skill | `garrytan/gstack` `cso/SKILL.md` | `e8893a1` (v1.20.0.0) | 2026-04-30 |
+| `skills/qa/SKILL.md` | Skill | `garrytan/gstack` `qa/SKILL.md` | `e8893a1` (v1.20.0.0) | 2026-04-30 |
+| `prompts/ship.md` | Template | `garrytan/gstack` `ship/SKILL.md` | `e8893a1` (v1.20.0.0) | 2026-04-30 |
 
 ## 跟进方法
 
@@ -20,7 +20,7 @@ cd vendor/gstack
 git fetch origin main
 git checkout origin/main
 
-# 查看自此 commit 以来的变更
+# 查看自此 commit 以来某个 skill 的变更
 git log e8893a1..HEAD --oneline -- review/SKILL.md
 
 # 查看具体 diff
