@@ -1,6 +1,7 @@
 ---
 name: plan-ceo-review
-description: Strategic plan review. Four scope modes (Expansion, Selective, Hold, Reduction). Challenges premises, generates alternatives, reviews architecture, error handling, deployment, and observability. Produces scoped implementation plan. Use when asked to "review this plan", "CEO review", "scope review", or after /skill:office-hours produces a design doc.
+description: |
+  Strategic plan review with 4 scope modes (Expansion, Selective, Hold, Reduction). Challenges premises, generates alternatives, reviews architecture, error handling, deployment, and observability. Produces scoped implementation plan. Use when asked to "review this plan", "CEO review", "scope review", or after /skill:office-hours produces a design doc.
 allowed-tools: bash, read, write, grep, find
 compatibility: requires git
 ---

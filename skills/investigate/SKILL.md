@@ -1,6 +1,7 @@
 ---
 name: investigate
-description: Systematic debugging with root cause investigation. Trace symptoms to root cause, test hypotheses, fix with minimal diff and regression test. Iron Law: no fixes without root cause. Use when asked to "debug", "fix this bug", "why is this broken", "root cause analysis". Proactively suggest when user reports errors or unexpected behavior.
+description: |
+  Systematic debugging: trace symptoms to root cause, test hypotheses, fix with minimal diff and regression test. Iron Law — no fixes without confirmed root cause. Use when asked to "debug", "fix this bug", "why is this broken", "root cause analysis". Proactively suggest when user reports errors or unexpected behavior.
 allowed-tools: bash, read, edit, write, grep, find
 compatibility: requires git
 ---
