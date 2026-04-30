@@ -36,3 +36,4 @@ git diff e8893a1..HEAD -- review/SKILL.md
 ```
 
 后续跟进后将 `UPSTREAM.md` 中的 commit 更新为新基准。
+| `skills/plan-eng-review/SKILL.md` | Skill | `garrytan/gstack` `plan-eng-review/SKILL.md` | `e8893a1` (v1.20.0.0) | 2026-04-30 |
