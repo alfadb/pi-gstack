@@ -15,8 +15,9 @@ pi install git:github.com/alfadb/pi-gstack
 | 命令 | 角色 | 说明 |
 |------|------|------|
 | `/review` | Staff Engineer | 分支 diff 审查：SQL 安全、竞态条件、shell 注入、范围漂移、完成度审计 |
+| `/cso` | Chief Security Officer | 安全审计：OWASP Top 10、STRIDE 威胁模型、密钥扫描、供应链风险、CI/CD 安全、LLM 攻击面 |
 
-计划移植：`/cso`（安全审计）、`/ship`（发布检查）、`/qa`（质量测试）
+计划移植：`/ship`（发布检查）、`/qa`（质量测试）
 
 ## 使用
 

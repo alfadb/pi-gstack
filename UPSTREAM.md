@@ -7,6 +7,7 @@
 | pi-gstack 文件 | 上游来源 | 上游 commit | 迁移日期 |
 |---------------|---------|------------|---------|
 | `prompts/review.md` | `garrytan/gstack` `review/SKILL.md` | `e8893a1` (v1.20.0.0, 2026-04-28) | 2026-04-30 |
+| `prompts/cso.md` | `garrytan/gstack` `cso/SKILL.md` | `e8893a1` (v1.20.0.0, 2026-04-28) | 2026-04-30 |
 
 ## 跟进方法
 
