@@ -1,0 +1,10 @@
+{
+  "name": "pi-gstack",
+  "version": "0.1.0",
+  "description": "gstack methodology ported to pi-coding-agent: opinionated review, QA, security audit, and ship workflows as prompt templates",
+  "keywords": ["pi-package", "code-review", "qa", "security", "workflow"],
+  "license": "MIT",
+  "pi": {
+    "prompts": ["./prompts"]
+  }
+}
