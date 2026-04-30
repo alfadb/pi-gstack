@@ -8,6 +8,7 @@
 |---------------|---------|------------|---------|
 | `prompts/review.md` | `garrytan/gstack` `review/SKILL.md` | `e8893a1` (v1.20.0.0, 2026-04-28) | 2026-04-30 |
 | `prompts/cso.md` | `garrytan/gstack` `cso/SKILL.md` | `e8893a1` (v1.20.0.0, 2026-04-28) | 2026-04-30 |
+| `prompts/ship.md` | `garrytan/gstack` `ship/SKILL.md` | `e8893a1` (v1.20.0.0, 2026-04-28) | 2026-04-30 |
 
 ## 跟进方法
 
