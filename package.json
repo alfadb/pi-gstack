@@ -5,6 +5,7 @@
   "keywords": ["pi-package", "code-review", "qa", "security", "workflow"],
   "license": "MIT",
   "pi": {
-    "prompts": ["./prompts"]
+    "prompts": ["./prompts"],
+    "skills": ["./skills"]
   }
 }
