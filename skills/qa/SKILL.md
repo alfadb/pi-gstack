@@ -9,6 +9,21 @@ compatibility: requires pi-browse extension installed (or Chrome + browser-tools
 
 Test web applications like a real user — click everything, fill every form, check every state. Find bugs, fix them with atomic commits, re-verify.
 
+---
+
+## Brain Context Load
+
+Before testing, search your brain for relevant QA history:
+
+1. Extract keywords from the page URL, feature name, and error patterns.
+2. Use `gbrain_search` to find past QA reports, known fragile areas, or related bugs.
+3. Use `gbrain_get` to read the top 3 matches.
+4. Use this context to prioritize test areas — focus on previously fragile features first.
+
+If gbrain tools are not available, proceed without brain context.
+
+---
+
 ## Browser Setup
 
 **Primary (pi-browse extension):** If `browse_goto` tool is available, use it directly — no setup needed. The extension manages its own headless Chromium.
@@ -165,6 +180,23 @@ Reference `references/issue-taxonomy.md` for the full taxonomy. Quick reference:
 | HIGH | Broken core feature, blocked user flow | Always |
 | MEDIUM | Visual glitch, edge case, a11y issue | Standard tier |
 | LOW | Cosmetic, typo, minor style | Exhaustive only |
+
+---
+
+## Save Results to Brain
+
+After QA testing, persist findings:
+
+1. Use `gbrain_put` with:
+   - slug: `qa-<feature>-<date>` (e.g. `qa-checkout-2026-05-01`)
+   - title: `"QA: <page/feature> — <date>"`
+   - tags: `"qa,<feature-slug>,<project-slug>"`
+   - content: the QA report in markdown
+2. Note how many brain pages were found and how many new bugs were discovered.
+
+If gbrain tools are not available, skip this step.
+
+---
 
 ## Output Format
 

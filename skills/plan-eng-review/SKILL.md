@@ -20,6 +20,21 @@ Lock in the execution plan — architecture, data flow, edge cases, tests — be
 - Bias toward explicit over clever
 - Right-sized diff: smallest clean change. But don't shrink a necessary rewrite
 
+---
+
+## Brain Context Load
+
+Before reviewing, search your brain for engineering context:
+
+1. Extract keywords from the feature name, affected modules, and technology stack.
+2. Use `gbrain_search` to find past eng reviews, architecture decisions, or related patterns.
+3. Use `gbrain_get` to read the top 3 matches.
+4. Use this context to avoid re-litigating settled architecture decisions.
+
+If gbrain tools are not available, proceed without brain context.
+
+---
+
 ## Step 0: Scope Challenge
 
 Before reviewing, answer:
@@ -133,3 +148,18 @@ Write to `$ENG_PATH`:
 ## Priority Hierarchy
 
 Architecture > Test Plan > Code Quality > Performance. If context is tight, keep architecture and tests.
+
+---
+
+## Save Results to Brain
+
+After the review, persist architecture decisions:
+
+1. Use `gbrain_put` with:
+   - slug: `eng-review-<feature-slug>` (e.g. `eng-review-auth-refactor`)
+   - title: `"Eng Review: <feature name>"`
+   - tags: `"eng-review,<feature-slug>,<project-slug>"`
+   - content: review findings and decisions in markdown
+2. Note how many brain pages were found in the initial search.
+
+If gbrain tools are not available, skip this step.

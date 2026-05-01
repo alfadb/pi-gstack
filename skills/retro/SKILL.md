@@ -16,6 +16,21 @@ Analyze the last 7 days (or specified window) of work.
 - `/skill:retro 30d` — last 30 days
 - `/skill:retro compare` — compare current vs prior same-length window
 
+---
+
+## Brain Context Load
+
+Before running the retrospective, search your brain for context:
+
+1. Extract keywords from the project name and time window.
+2. Use `gbrain_search` to find past retros, patterns, or related learnings.
+3. Use `gbrain_get` to read the top 3 matches.
+4. Use this context to identify recurring patterns or previously flagged issues.
+
+If gbrain tools are not available, proceed without brain context.
+
+---
+
 ## Step 1: Gather Data
 
 Do NOT use TZ override — use system default timezone.
@@ -94,6 +109,23 @@ Group commits into themes (features, bug fixes, refactors, docs, etc.). What was
 ## Step 8: Narrative
 
 One paragraph summary: what was accomplished, what patterns emerged, what needs attention next week.
+
+---
+
+## Save Results to Brain
+
+After the retrospective, persist key findings:
+
+1. Use `gbrain_put` with:
+   - slug: `retro-<date-range>` (e.g. `retro-2026-04`)
+   - title: `"Retro: <date range>"`
+   - tags: `"retro,<date>,<project-slug>"`
+   - content: the retrospective output in markdown
+2. Note how many brain pages were found in the initial search.
+
+If gbrain tools are not available, skip this step.
+
+---
 
 ## Output Format
 

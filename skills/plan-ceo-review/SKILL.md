@@ -19,6 +19,21 @@ You are not here to rubber-stamp. Make the plan extraordinary. Catch every landm
 5. Observability is scope: logs, metrics, alerts are deliverables, not afterthoughts.
 6. Everything deferred must be written to TODOS.md. Vague intentions are lies.
 
+---
+
+## Brain Context Load
+
+Before the CEO review, search your brain for strategic context:
+
+1. Extract keywords from the feature and business domain.
+2. Use `gbrain_search` to find past CEO plans, scope decisions, or product strategy pages.
+3. Use `gbrain_get` to read the top 3 matches.
+4. Use this context to ground scope decisions — don't re-debate already-settled strategy.
+
+If gbrain tools are not available, proceed without brain context.
+
+---
+
 ## Phase 0: System Audit
 
 ```bash
@@ -188,3 +203,18 @@ Write to `$PLAN_PATH`:
 ## Rollout Plan
 {feature flags, migrations, rollback, monitoring}
 ```
+
+---
+
+## Save Results to Brain
+
+After the CEO review, persist the plan:
+
+1. Use `gbrain_put` with:
+   - slug: `ceo-plan-<feature-slug>` (e.g. `ceo-plan-payment-v2`)
+   - title: `"CEO Plan: <feature name>"`
+   - tags: `"ceo-plan,<feature-slug>,<project-slug>"`
+   - content: scope decisions and vision in markdown
+2. Note how many brain pages were found in the initial search.
+
+If gbrain tools are not available, skip this step.

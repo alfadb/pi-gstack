@@ -16,6 +16,19 @@ Fixing symptoms creates whack-a-mole debugging. Every fix that doesn't address r
 
 ---
 
+## Brain Context Load
+
+Before investigating, search your brain for relevant history:
+
+1. Extract 2-4 keywords from the symptom (error messages, module names, file paths).
+2. Use `gbrain_search` to find past investigations, RCAs, or related patterns.
+3. Use `gbrain_get` to read the top 3 matching pages.
+4. Use this context to identify known pitfalls, previous fixes, or related modules.
+
+If gbrain tools are not available or return no results, proceed without brain context.
+
+---
+
 ## Phase 1: Root Cause Investigation
 
 Gather context before forming any hypothesis.
@@ -93,6 +106,21 @@ Once root cause is confirmed:
 4. **Run full test suite.** No regressions.
 
 5. **If fix touches >5 files:** flag the blast radius and give user options (proceed/split/rethink).
+
+---
+
+## Save Results to Brain
+
+After completing the investigation, persist the RCA:
+
+1. Use `gbrain_put` with:
+   - slug: `rca-<short-description>` (e.g. `rca-auth-timeout-march-2026`)
+   - title: `"Investigation: <symptom summary>"`
+   - tags: `"investigation,rca,<affected-files>"`
+   - content: the DEBUG REPORT block below in markdown
+2. Note in your completion output: how many brain pages were found in the initial search, and whether any save was throttled.
+
+If gbrain tools are not available, skip this step.
 
 ---
 

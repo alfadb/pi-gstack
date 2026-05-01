@@ -32,6 +32,19 @@ Read `README.md`, `AGENTS.md`, `TODOS.md` if they exist. Map relevant codebase a
 
 Mode mapping: A/B → Startup mode. C/D/E → Builder mode.
 
+## Brain Context Load
+
+Before the discussion, search your brain for relevant history:
+
+1. Extract keywords from the user's idea (problem domain, product category, competitors named).
+2. Use `gbrain_search` to find past office hours, related design docs, or similar product discussions.
+3. Use `gbrain_get` to read the top 3 matches.
+4. Use this context to ground the discussion — don't re-litigate already-decided questions.
+
+If gbrain tools are not available or return no results, proceed without brain context.
+
+---
+
 ## Phase 2A: Startup Mode — Six Forcing Questions
 
 Ask **one at a time**. Push until answer is specific and evidence-based. Comfort means you haven't gone deep enough.
@@ -142,6 +155,21 @@ APPROACH C: [name] — [1-line description]
 
 RECOMMENDATION: [choice] because [reason]
 ```
+
+## Save Results to Brain
+
+After the discussion, persist the design document to your brain:
+
+1. Use `gbrain_put` with:
+   - slug: `design-<project-slug>`
+   - title: `"Office Hours: <project name>"`
+   - tags: `"design-doc,<project-slug>,office-hours"`
+   - content: the design doc in markdown (Problem + Premises + Alternatives + Recommended Approach)
+2. Note how many brain pages were found in the initial search.
+
+If gbrain tools are not available, skip this step.
+
+---
 
 ## Phase 5: Design Document
 

@@ -9,6 +9,21 @@ Fully automated ship workflow. Run straight through — only stop for merge conf
 
 **Never stop for:** uncommitted changes (always include them), commit message approval (auto-commit), version bump choice (auto-pick PATCH).
 
+---
+
+## Brain Context Load
+
+Before shipping, search your brain for deployment context:
+
+1. Extract keywords from the branch name, changed modules, and feature domain.
+2. Use `gbrain_search` to find past releases, deployment notes, or related patterns.
+3. Use `gbrain_get` to read the top 3 matches.
+4. Use this context to anticipate risks — has this module caused deployment issues before?
+
+If gbrain tools are not available, proceed without brain context.
+
+---
+
 ## Step 1: Pre-flight
 
 ```bash
@@ -185,6 +200,23 @@ If PR already exists, update it:
 ```bash
 gh pr edit --title "$PR_TITLE" --body "$PR_BODY"
 ```
+
+---
+
+## Save Results to Brain
+
+After shipping, persist release notes:
+
+1. Use `gbrain_put` with:
+   - slug: `release-<version>` (e.g. `release-1.2.3`)
+   - title: `"Release: <version>"`
+   - tags: `"release,<version>,<project-slug>"`
+   - content: changelog entry and deploy details in markdown
+2. Note how many brain pages were found in the initial search.
+
+If gbrain tools are not available, skip this step.
+
+---
 
 ## Step 11: Output summary
 

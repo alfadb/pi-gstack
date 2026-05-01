@@ -79,6 +79,21 @@ When time/money is tight, prioritize in this order:
 | **4. Polish** | Consistent spacing, proper loading states, smooth transitions | Polish signals care and builds trust |
 | **5. Delight** | Micro-interactions, easter eggs, personality | Only if 1-4 are solid |
 
+---
+
+## Brain Context Load
+
+Before reviewing, search your brain for design context:
+
+1. Extract keywords from the feature and any design system or pattern library references.
+2. Use `gbrain_search` to find past design reviews, design systems, or UX patterns.
+3. Use `gbrain_get` to read the top 3 matches.
+4. Use this context to avoid re-litigating settled design decisions.
+
+If gbrain tools are not available, proceed without brain context.
+
+---
+
 ## Phase 0: Setup
 
 Detect the plan and UI scope:
@@ -189,6 +204,23 @@ Write to `$DESIGN_REVIEW_PATH`:
 
 ## Critical Fixes
 {top 3 fixes applied to the plan}
+
+---
+
+## Save Results to Brain
+
+After the design review, persist decisions:
+
+1. Use `gbrain_put` with:
+   - slug: `design-review-<feature-slug>` (e.g. `design-review-onboarding-v2`)
+   - title: `"Design Review: <feature name>"`
+   - tags: `"design-review,<feature-slug>,<project-slug>"`
+   - content: ratings and critical fixes in markdown
+2. Note how many brain pages were found in the initial search.
+
+If gbrain tools are not available, skip this step.
+
+---
 
 ## Design Debt
 {issues noted but not blocking — for future iteration}

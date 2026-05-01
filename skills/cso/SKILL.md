@@ -23,6 +23,21 @@ Infrastructure-first security audit. Start from the perimeter — dependencies, 
 3. `--diff` limits scanning to files changed on current branch vs base. Git history scans limit to current branch commits only.
 4. Phases 0, 1 always run regardless of scope flag.
 
+---
+
+## Brain Context Load
+
+Before the security audit, search your brain for relevant history:
+
+1. Extract keywords from the project and any known vulnerability patterns.
+2. Use `gbrain_search` to find past security audits, known vulnerable patterns, or dependency advisories.
+3. Use `gbrain_get` to read the top 3 matches.
+4. Use this context to prioritize phases — don't re-scan areas already audited and cleared.
+
+If gbrain tools are not available, proceed without brain context.
+
+---
+
 ## Phase 0: Architecture + Stack Detection
 
 Build an explicit mental model before hunting.
@@ -228,6 +243,23 @@ Before producing findings, run every candidate through this filter.
 - Dependencies: Check if vulnerable function is directly called. Mark VERIFIED if called, UNVERIFIED if not.
 
 Mark: VERIFIED (confirmed via code tracing) / UNVERIFIED (pattern match only) / TENTATIVE (<8/10 confidence)
+
+---
+
+## Save Results to Brain
+
+After the security audit, persist findings:
+
+1. Use `gbrain_put` with:
+   - slug: `security-audit-<date>` (e.g. `security-audit-2026-05-01`)
+   - title: `"Security Audit: <date>"`
+   - tags: `"security-audit,<date>,<project-slug>"`
+   - content: findings and remediation status in markdown
+2. Note how many brain pages were found and whether any save was throttled.
+
+If gbrain tools are not available, skip this step.
+
+---
 
 ## Output Format
 
