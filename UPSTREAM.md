@@ -46,18 +46,106 @@
 
 ## 跟进方法
 
+### 1. 拉取上游最新代码
+
 ```bash
 cd vendor/gstack
-git fetch origin main && git checkout origin/main
+git fetch origin main
+git checkout main && git pull origin main
+```
 
-# 查看自此 commit 以来所有已迁移 skill 的变更
-for skill in office-hours plan-ceo-review review investigate cso qa retro document-release land-and-deploy ship; do
-  echo "=== $skill ==="
-  git log e8893a1..HEAD --oneline -- "$skill/SKILL.md" 2>/dev/null || echo "  (no changes)"
+### 2. 扫描所有已移植文件的变更
+
+```bash
+BASE_COMMIT=e8893a1
+
+# ── Skills（19 个）──
+for skill in \
+  office-hours autoplan \
+  plan-ceo-review plan-eng-review plan-design-review plan-devex-review \
+  review investigate cso \
+  qa qa-only \
+  retro document-release land-and-deploy \
+  canary scrape health benchmark setup-deploy; do
+  echo ""
+  echo "══════ $skill ══════"
+  changes=$(git log $BASE_COMMIT..HEAD --oneline -- "$skill/SKILL.md" 2>/dev/null)
+  if [ -n "$changes" ]; then
+    echo "$changes"
+    # 自动生成逐文件 diff 摘要
+    git diff $BASE_COMMIT..HEAD --stat -- "$skill/SKILL.md" 2>/dev/null
+  else
+    echo "  (no changes)"
+  fi
 done
 
-# 查看具体 diff
-git diff e8893a1..HEAD -- review/SKILL.md
+# ── Prompt Template ──
+echo ""
+echo "══════ ship (prompt template) ══════"
+git log $BASE_COMMIT..HEAD --oneline -- "ship/SKILL.md" 2>/dev/null || echo "  (no changes)"
+
+# ── Reference 文件 ──
+echo ""
+echo "══════ reference files ══════"
+for ref in \
+  "review/checklist.md" \
+  "review/specialists/testing.md" \
+  "review/specialists/security.md" \
+  "review/specialists/performance.md" \
+  "review/specialists/maintainability.md" \
+  "review/specialists/api-contract.md" \
+  "review/specialists/data-migration.md" \
+  "review/specialists/red-team.md" \
+  "qa/references/issue-taxonomy.md" \
+  "qa/templates/qa-report-template.md" \
+  "plan-devex-review/dx-hall-of-fame.md"; do
+  changes=$(git log $BASE_COMMIT..HEAD --oneline -- "$ref" 2>/dev/null)
+  [ -n "$changes" ] && echo "CHANGED: $ref — $changes"
+done
+
+# ── Browse 扩展源码 ──
+echo ""
+echo "══════ browse extension ══════"
+git log $BASE_COMMIT..HEAD --oneline -- "browse/src/" 2>/dev/null || echo "  (no changes)"
+```
+
+### 3. 查看具体 diff
+
+```bash
+# 查看某个 skill 的完整 diff
+git diff $BASE_COMMIT..HEAD -- review/SKILL.md
+
+# 只看新增/修改的章节标题（快速了解结构性变更）
+git diff $BASE_COMMIT..HEAD -- review/SKILL.md | grep '^+##'
+```
+
+### 4. 逐项评估并应用
+
+对每个有变更的文件：
+
+1. **读 diff**：理解上游改了什么（方法论增强？bug 修复？措辞优化？）
+2. **判断适用性**：
+   - **方法论变更** → 值得移植到 pi-gstack
+   - **gstack 基础设施变更**（preamble/telemetry/hook） → 忽略
+   - **模型覆盖层/调谐**（model-overlay/plan-tune） → pi 无对等概念，忽略
+3. **应用变更**：手动编辑 pi-gstack 对应文件，保持：
+   - pi 原生工具名（`bash/read/edit/write/grep/find`）
+   - gstack 兼容的输出路径（`~/.gstack/projects/$SLUG/...`）
+   - 剥离 preamble/telemetry/gbrain 等基础设施段
+4. **更新本文件**：将 `BASE_COMMIT` 更新为当前 `origin/main` 的 HEAD
+
+### 5. 收尾
+
+```bash
+# 更新基准 commit
+cd vendor/gstack
+NEW_BASE=$(git rev-parse --short HEAD)
+cd ../..
+sed -i "s/基准 commit: \`.*\`/基准 commit: \`$NEW_BASE\`/" UPSTREAM.md
+
+# 提交
+git add UPSTREAM.md <changed-skill-files>
+git commit -m "chore: follow upstream gstack to $NEW_BASE"
 ```
 
 后续跟进后将 `UPSTREAM.md` 中的 commit 更新为新基准。
