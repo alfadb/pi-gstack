@@ -30,7 +30,19 @@ Before reviewing, answer:
 4. **Completeness check:** Is the plan doing the complete version? With AI coding, full coverage costs minutes more than shortcuts.
 5. **Distribution check:** New artifact (binary, package, container)? Does it include build/publish pipeline?
 
-Read design doc if exists (`.pi/designs/`). Cross-reference TODOS.md.
+Read design doc if exists. Cross-reference TODOS.md.
+
+Check gstack-compatible paths:
+```bash
+REMOTE=$(git remote get-url origin 2>/dev/null | sed 's|.*[:/]\([^/]*/[^/]*\)\.git$|\1|;s|.*[:/]\([^/]*/[^/]*\)$|\1|' | tr '/' '-' | tr -cd 'a-zA-Z0-9._-')
+SLUG="${REMOTE:-$(basename "$PWD" | tr -cd 'a-zA-Z0-9._-')}"
+BRANCH=$(git branch --show-current | tr '/' '-' | tr -cd 'a-zA-Z0-9._-')
+# Design docs at project root (office-hours format)
+ls ~/.gstack/projects/$SLUG/*-$BRANCH-design-*.md 2>/dev/null || ls ~/.gstack/projects/$SLUG/*-design-*.md 2>/dev/null
+# CEO plans in ceo-plans/ subdirectory
+ls ~/.gstack/projects/$SLUG/ceo-plans/*.md 2>/dev/null
+echo "---"
+```
 
 ## Review Sections
 
@@ -93,7 +105,13 @@ grep "test" package.json 2>/dev/null | head -1
 
 ## Output
 
-Save to `.pi/designs/<slug>-eng-plan-<date>.md`:
+Save to gstack-compatible path:
+```bash
+mkdir -p ~/.gstack/projects/$SLUG/ceo-plans
+ENG_PATH="$HOME/.gstack/projects/$SLUG/ceo-plans/$(date +%Y-%m-%d)-eng-review-<slug>.md"
+```
+
+Write to `$ENG_PATH`:
 
 ```markdown
 # Engineering Plan: {Title}

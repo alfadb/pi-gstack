@@ -28,7 +28,18 @@ git log --since=30.days --name-only --format="" | sort | uniq -c | sort -rn | he
 grep -rn "TODO\|FIXME\|HACK" --include="*.ts" --include="*.js" --include="*.py" --include="*.rb" . 2>/dev/null | head -20
 ```
 
-Read AGENTS.md, README, TODOS.md. Check for existing design docs in `.pi/designs/`.
+Read AGENTS.md, README, TODOS.md.
+
+Check for existing design docs (gstack-compatible paths for cross-agent continuity):
+```bash
+REMOTE=$(git remote get-url origin 2>/dev/null | sed 's|.*[:/]\([^/]*/[^/]*\)\.git$|\1|;s|.*[:/]\([^/]*/[^/]*\)$|\1|' | tr '/' '-' | tr -cd 'a-zA-Z0-9._-')
+SLUG="${REMOTE:-$(basename "$PWD" | tr -cd 'a-zA-Z0-9._-')}"
+BRANCH=$(git branch --show-current | tr '/' '-' | tr -cd 'a-zA-Z0-9._-')
+# CEO plans in ceo-plans/ subdirectory
+ls ~/.gstack/projects/$SLUG/ceo-plans/*.md 2>/dev/null || echo "no existing CEO plans"
+# Design docs at project root (office-hours format: *-design-*.md)
+ls ~/.gstack/projects/$SLUG/*-$BRANCH-design-*.md 2>/dev/null || ls ~/.gstack/projects/$SLUG/*-design-*.md 2>/dev/null || echo "no existing designs"
+```
 
 ## Phase 1: Nuclear Scope Challenge
 
@@ -148,7 +159,15 @@ Final check: can an engineer pick this up and implement without asking questions
 
 ## Output
 
-Save plan to `.pi/designs/<slug>-plan-<date>.md`:
+Save plan to gstack-compatible path for cross-agent continuity:
+```bash
+REMOTE=$(git remote get-url origin 2>/dev/null | sed 's|.*[:/]\([^/]*/[^/]*\)\.git$|\1|;s|.*[:/]\([^/]*/[^/]*\)$|\1|' | tr '/' '-' | tr -cd 'a-zA-Z0-9._-')
+SLUG="${REMOTE:-$(basename "$PWD" | tr -cd 'a-zA-Z0-9._-')}"
+mkdir -p ~/.gstack/projects/$SLUG/ceo-plans
+PLAN_PATH="$HOME/.gstack/projects/$SLUG/ceo-plans/$(date +%Y-%m-%d)-<slug>.md"
+```
+
+Write to `$PLAN_PATH`:
 
 ```markdown
 # Plan: {Title}

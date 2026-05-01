@@ -1,0 +1,14 @@
+{
+  "name": "pi-browse",
+  "version": "0.1.0",
+  "description": "pi extension: headless browser QA testing with snapshot + @ref element selection",
+  "license": "MIT",
+  "type": "module",
+  "pi": {
+    "extensions": ["./index.ts"]
+  },
+  "dependencies": {
+    "playwright": "^1.52.0",
+    "diff": "^7.0.0"
+  }
+}

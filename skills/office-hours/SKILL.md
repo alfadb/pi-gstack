@@ -145,7 +145,18 @@ RECOMMENDATION: [choice] because [reason]
 
 ## Phase 5: Design Document
 
-Save to `.pi/designs/<slug>-design-<date>.md`:
+Save to gstack-compatible path (exact format: `~/.gstack/projects/{slug}/{user}-{branch}-design-{datetime}.md`):
+```bash
+REMOTE=$(git remote get-url origin 2>/dev/null | sed 's|.*[:/]\([^/]*/[^/]*\)\.git$|\1|;s|.*[:/]\([^/]*/[^/]*\)$|\1|' | tr '/' '-' | tr -cd 'a-zA-Z0-9._-')
+SLUG="${REMOTE:-$(basename "$PWD" | tr -cd 'a-zA-Z0-9._-')}"
+USER=$(whoami | tr -cd 'a-zA-Z0-9._-')
+BRANCH=$(git branch --show-current | tr '/' '-' | tr -cd 'a-zA-Z0-9._-')
+NOW=$(date +%Y%m%d-%H%M)
+mkdir -p ~/.gstack/projects/$SLUG
+DESIGN_PATH="$HOME/.gstack/projects/$SLUG/${USER}-${BRANCH}-design-${NOW}.md"
+```
+
+Write to `$DESIGN_PATH`:
 
 ```markdown
 # Design: {title}
