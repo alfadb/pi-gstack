@@ -187,22 +187,27 @@ For diffs > 50 lines, dispatch specialists in parallel across different models v
 | Performance | `references/performance.md` | Backend or frontend files changed |
 | Data Migration | `references/data-migration.md` | Migration files changed |
 | API Contract | `references/api-contract.md` | API/route/controller files changed |
-| Red Team | `references/red-team.md` | >200 lines OR any CRITICAL finding |
 
 ### Procedure
 
-1. **Read checklists** — for each triggered specialist, read its reference file. Store the content as `{NAME}_CHECKLIST` (e.g., `TESTING_CHECKLIST`).
-2. **Get diff** — the diff was already computed in Step 3 (`git diff origin/<base>`). Store as `{DIFF}`.
-3. **Execute** `/multi-review` (expands to `multi_dispatch` with predefined model assignments per specialist).
-4. **Process results** as described in the template:
-   - Dedup overlapping findings, keep highest confidence version
-   - Cross-model confirmation: same finding reported by ≥2 models → confidence +2
-   - Contradictory findings: flag `[MODEL-DISAGREE]` with each model's position
-   - Merge all findings into main review output with specialist source tag
+1. **Read checklists** — for each triggered specialist, read its reference file. Store content as `{NAME}_CHECKLIST`.
+2. **Get diff** — already computed in Step 3. Store as `{DIFF}`.
+3. **Execute** `/multi-review` — first run `pi --list-models`, select models per the template's principles, then call `multi_dispatch(parallel)`.
+4. **Process results**: dedup, cross-model boost (+2), [MODEL-DISAGREE] flags, merge into output.
 
-If pi-multi-agent is not available (multi_dispatch tool not found), fall back to sequential: read each specialist file, apply its checklist against the diff, record findings with `specialist: <name>` tag.
+If `multi_dispatch` unavailable, fall back to sequential execution.
+If diff < 50 lines: skip.
 
-If diff < 50 lines: skip. Print: "Small diff — specialists skipped."
+### Step 5.5: Adversarial Debate (`/multi-redteam`)
+
+For diffs > 200 lines OR any CRITICAL finding from earlier steps, run `/multi-redteam`.
+
+Attacker and defender models debate the diff over {ROUNDS} rounds (default 2). Output:
+- Confirmed vulnerabilities → merge as `specialist: redteam`
+- False positives → discard
+- Disputed → flag `[REDTEAM-DISPUTED]`
+
+Conditions not met: skip.
 
 ## Step 6: Confidence Calibration
 
