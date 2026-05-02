@@ -49,6 +49,21 @@ Gather context before forming any hypothesis.
 
 Output: **"Root cause hypothesis: ..."** — a specific, testable claim.
 
+### Phase 1.5: Multi-Model Hypothesis Generation (`/multi-diagnose`)
+
+If `multi_dispatch` is available, run `/multi-diagnose` with:
+- `{SYMPTOMS}` = Phase 1 step 1 output
+- `{CODE_PATH}` = Phase 1 step 2 output
+- `{RECENT_CHANGES}` = Phase 1 step 3 output
+- `{REPRO_STEPS}` = Phase 1 step 4 output
+
+This dispatches 2-3 models from different providers to independently diagnose the same bug. The synthesis provides:
+- **一致假设** → 高置信度，优先验证
+- **分歧假设** → 列出各方理由，按置信度排序
+- **唯一假设** → 标注来源模型
+
+Proceed to Phase 2 with the top hypotheses.
+
 ---
 
 ## Phase 2: Pattern Analysis
