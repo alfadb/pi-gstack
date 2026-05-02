@@ -43,6 +43,8 @@ Before the discussion, search your brain for relevant history:
 
 If gbrain tools are not available or return no results, proceed without brain context.
 
+**Multi-model:** If `multi_dispatch` is available, optionally use `/multi-plan` to get diverse model perspectives on key decisions (debate for discussion, ensemble for voting).
+
 ---
 
 ## Phase 2A: Startup Mode — Six Forcing Questions

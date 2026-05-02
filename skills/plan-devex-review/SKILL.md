@@ -31,6 +31,8 @@ Before the DX review, search your brain for developer experience context:
 
 If gbrain tools are not available or return no results, proceed without brain context.
 
+**Multi-model:** If `multi_dispatch` is available, optionally use `/multi-plan` to get diverse model perspectives on key decisions (debate for discussion, ensemble for voting).
+
 ---
 
 ## The Seven DX Characteristics

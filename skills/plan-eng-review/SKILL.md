@@ -33,6 +33,8 @@ Before reviewing, search your brain for engineering context:
 
 If gbrain tools are not available, proceed without brain context.
 
+**Multi-model:** If `multi_dispatch` is available, optionally use `/multi-plan` to get diverse model perspectives on key decisions (debate for discussion, ensemble for voting).
+
 ---
 
 ## Step 0: Scope Challenge
