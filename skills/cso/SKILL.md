@@ -78,6 +78,18 @@ grep -q "^\.env" .gitignore 2>/dev/null && echo ".env IS gitignored" || echo "WA
 
 Severity: CRITICAL for active secret patterns (AKIA, sk_live_, ghp_).
 
+### Multi-Model Acceleration (pi-multi-agent)
+
+If `multi_dispatch` is available, parallelize compatible phases across different models:
+
+1. Gather context from all completed phases (Phase 0-2 output + attack surface map + architecture summary)
+2. Execute `/multi-cso` — dispatches Phases 3, 5-11 as independent parallel tasks, each with a specialist model (security → opus-4-7, infrastructure → deepseek-v4-pro, OWASP/STRIDE → gpt-5.5-pro)
+3. Merge findings back into the main audit output
+
+If unavailable, proceed with sequential phase execution below.
+
+---
+
 ## Phase 3: Dependency Supply Chain
 
 ```bash
