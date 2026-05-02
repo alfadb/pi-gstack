@@ -153,21 +153,10 @@ APPROACH B: [name] — [1-line description]
 APPROACH C: [name] — [1-line description]
   ...
 
-RECOMMENDATION: [choice] because [reason]
+RECOMMENDATION: [choice] because [one-line reason mapped to the founder's stated goal]
 ```
 
-## Save Results to Brain
-
-After the discussion, persist the design document to your brain:
-
-1. Use `gbrain_put` with:
-   - slug: `design-<project-slug>`
-   - title: `"Office Hours: <project name>"`
-   - tags: `"design-doc,<project-slug>,office-hours"`
-   - content: the design doc in markdown (Problem + Premises + Alternatives + Recommended Approach)
-2. Note how many brain pages were found in the initial search.
-
-If gbrain tools are not available, skip this step.
+**STOP.** Do NOT proceed to Phase 5 (Design Document) or any design-doc generation until the user responds. A "clearly winning approach" is still an approach decision and still needs explicit user approval before it lands in the design doc. Present the alternatives and recommendation, then stop and wait.
 
 ---
 

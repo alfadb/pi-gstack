@@ -18,6 +18,19 @@ Run the complete planning and review pipeline in sequence. Auto-decide safe choi
 5. **Track decisions** — every auto-decision and user choice recorded for audit.
 6. **Taste ≠ Risk** — don't escalate preferences as safety issues, and don't auto-decide security concerns.
 
+## Brain Context Load
+
+Before running the pipeline, search your brain for planning context:
+
+1. Extract keywords from the feature and codebase area.
+2. Use `gbrain_search` to find past autoplan runs, design docs, or architecture decisions.
+3. Use `gbrain_get` to read the top 3 matches.
+4. Use this context to avoid re-exploring already-decided questions.
+
+If gbrain tools are not available or return no results, proceed without brain context.
+
+---
+
 ## Pipeline Sequence
 
 Run each skill in order. Each phase consumes the output of the previous phase.

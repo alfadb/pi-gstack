@@ -109,21 +109,6 @@ Once root cause is confirmed:
 
 ---
 
-## Save Results to Brain
-
-After completing the investigation, persist the RCA:
-
-1. Use `gbrain_put` with:
-   - slug: `rca-<short-description>` (e.g. `rca-auth-timeout-march-2026`)
-   - title: `"Investigation: <symptom summary>"`
-   - tags: `"investigation,rca,<affected-files>"`
-   - content: the DEBUG REPORT block below in markdown
-2. Note in your completion output: how many brain pages were found in the initial search, and whether any save was throttled.
-
-If gbrain tools are not available, skip this step.
-
----
-
 ## Phase 5: Verification & Report
 
 Reproduce the original bug, confirm fixed.

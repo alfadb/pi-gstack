@@ -9,6 +9,19 @@ compatibility: requires pi-browse extension installed, git
 
 Measure page performance and detect regressions. Compare against baselines. Flag what got slower.
 
+## Brain Context Load
+
+Before benchmarking, search your brain for performance context:
+
+1. Extract keywords from the target URL, page type, and performance concerns.
+2. Use `gbrain_search` to find past benchmarks, performance regressions, or known slow pages.
+3. Use `gbrain_get` to read the top 3 matches.
+4. Use this context to establish baseline expectations and focus on regressing metrics.
+
+If gbrain tools are not available or return no results, proceed without brain context.
+
+---
+
 ## Arguments
 
 - `/skill:benchmark <url>` — benchmark a URL
@@ -166,3 +179,4 @@ REPORT_PATH=".gstack/benchmarks/reports/$(date +%Y-%m-%d-%H%M)-benchmark.json"
 ```
 
 Save with full raw metrics for trend analysis. If `--baseline`, also save to `.gstack/benchmarks/baseline.json`.
+

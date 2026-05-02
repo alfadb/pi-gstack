@@ -183,21 +183,6 @@ Reference `references/issue-taxonomy.md` for the full taxonomy. Quick reference:
 
 ---
 
-## Save Results to Brain
-
-After QA testing, persist findings:
-
-1. Use `gbrain_put` with:
-   - slug: `qa-<feature>-<date>` (e.g. `qa-checkout-2026-05-01`)
-   - title: `"QA: <page/feature> — <date>"`
-   - tags: `"qa,<feature-slug>,<project-slug>"`
-   - content: the QA report in markdown
-2. Note how many brain pages were found and how many new bugs were discovered.
-
-If gbrain tools are not available, skip this step.
-
----
-
 ## Output Format
 
 ```

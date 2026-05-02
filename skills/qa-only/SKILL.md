@@ -9,6 +9,19 @@ compatibility: requires pi-browse extension installed
 
 Test web applications and report bugs. **Do NOT modify source code.** This is a read-only QA pass — find issues, document them, produce a report.
 
+## Brain Context Load
+
+Before testing, search your brain for QA context:
+
+1. Extract keywords from the site URL, feature area, and user flow.
+2. Use `gbrain_search` to find past QA reports, known bugs, or fragile areas of the app.
+3. Use `gbrain_get` to read the top 3 matches.
+4. Use this context to focus testing on historically problematic areas.
+
+If gbrain tools are not available or return no results, proceed without brain context.
+
+---
+
 ## Browser Setup
 
 Uses pi-browse extension tools: `browse_goto`, `browse_snapshot`, `browse_click`, `browse_fill`, `browse_is`, `browse_console`, `browse_screenshot`, `browse_responsive`.
@@ -155,3 +168,4 @@ Save report to:
 mkdir -p .gstack/qa-reports
 QA_PATH=".gstack/qa-reports/$(date +%Y-%m-%d-%H%M)-qa-report.md"
 ```
+

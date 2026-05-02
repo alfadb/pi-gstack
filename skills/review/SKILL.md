@@ -9,6 +9,19 @@ compatibility: requires git
 
 Review the current branch's diff against the base branch (default: `main`). Find issues that compile and pass CI but fail in production.
 
+## Brain Context Load
+
+Before reviewing, search your brain for review context:
+
+1. Extract keywords from changed modules, file paths, and the feature domain.
+2. Use `gbrain_search` to find past reviews, known pitfalls, or related RCAs.
+3. Use `gbrain_get` to read the top 3 matches.
+4. Use this context to identify recurring issues — if this module has caused bugs before, scrutinize it harder.
+
+If gbrain tools are not available or return no results, proceed without brain context.
+
+---
+
 ## Step 0: Detect platform and base branch
 
 Detect the git hosting platform:

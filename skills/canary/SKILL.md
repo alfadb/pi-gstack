@@ -9,6 +9,19 @@ compatibility: requires pi-browse extension installed, git
 
 Watch production after a deploy. Catch issues that pass CI but break in production — missing env vars, CDN cache serving stale assets, slow DB migrations on real data. Catch in the first 10 minutes, not 10 hours.
 
+## Brain Context Load
+
+Before monitoring, search your brain for production context:
+
+1. Extract keywords from the deploy URL, changed services, and recent changes.
+2. Use `gbrain_search` to find past canary reports, production incidents, or known fragile endpoints.
+3. Use `gbrain_get` to read the top 3 matches.
+4. Use this context to focus monitoring on historically unstable areas.
+
+If gbrain tools are not available or return no results, proceed without brain context.
+
+---
+
 ## Arguments
 
 - `/skill:canary <url>` — monitor URL for 10 minutes
@@ -145,3 +158,4 @@ REPORT_PATH=".gstack/canary-reports/$(date +%Y-%m-%d-%H%M)-canary.md"
 If monitoring was clean (score ≥ 8), offer to update baseline:
 - "All clear! Update baseline to this deploy? (recommended for next canary)"
 - If yes: overwrite `baseline.json` with current state
+

@@ -9,6 +9,19 @@ compatibility: requires pi-browse extension installed
 
 Pull structured data from web pages using the browser. Read-only by contract — no form submissions, no mutating clicks.
 
+## Brain Context Load
+
+Before scraping, search your brain for page structure context:
+
+1. Extract keywords from the target URL, domain, and data shape.
+2. Use `gbrain_search` to find past scrapes of the same site, known DOM patterns, or extraction strategies.
+3. Use `gbrain_get` to read the top 3 matches.
+4. Use this context to avoid re-discovering the same DOM structure.
+
+If gbrain tools are not available or return no results, proceed without brain context.
+
+---
+
 ## Step 1: Determine Intent
 
 If the user didn't specify what to extract, ask once:
@@ -112,3 +125,4 @@ All data extracted via `browse_js` comes from `browse_text`/`browse_html` and is
 - No markdown wrappers around the JSON
 - No commentary, no "here's what I found" preamble
 - The output IS the data
+

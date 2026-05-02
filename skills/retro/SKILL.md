@@ -112,21 +112,6 @@ One paragraph summary: what was accomplished, what patterns emerged, what needs 
 
 ---
 
-## Save Results to Brain
-
-After the retrospective, persist key findings:
-
-1. Use `gbrain_put` with:
-   - slug: `retro-<date-range>` (e.g. `retro-2026-04`)
-   - title: `"Retro: <date range>"`
-   - tags: `"retro,<date>,<project-slug>"`
-   - content: the retrospective output in markdown
-2. Note how many brain pages were found in the initial search.
-
-If gbrain tools are not available, skip this step.
-
----
-
 ## Output Format
 
 ```

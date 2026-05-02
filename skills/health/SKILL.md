@@ -11,6 +11,19 @@ Run every available quality tool, score the results, present a dashboard. Track 
 
 **HARD GATE:** Do NOT fix any issues. Produce the dashboard and recommendations only.
 
+## Brain Context Load
+
+Before the health check, search your brain for quality context:
+
+1. Extract keywords from the codebase language, framework, and toolchain.
+2. Use `gbrain_search` to find past health reports, known quality trends, or recurring issues.
+3. Use `gbrain_get` to read the top 3 matches.
+4. Use this context to compare trends — is quality improving or slipping since last check?
+
+If gbrain tools are not available or return no results, proceed without brain context.
+
+---
+
 ## Step 1: Detect Health Stack
 
 Auto-detect available tools:
@@ -129,3 +142,4 @@ HEALTH_PATH=".gstack/health-reports/$(date +%Y-%m-%d-%H%M)-health.json"
 ```
 
 Save as JSON with raw tool outputs and scores for trend tracking.
+

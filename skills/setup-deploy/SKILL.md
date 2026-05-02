@@ -9,6 +9,19 @@ compatibility: requires git
 
 Auto-detect the deployment platform and configure the project for `/skill:land-and-deploy` to work correctly.
 
+## Brain Context Load
+
+Before configuring deployment, search your brain for deploy context:
+
+1. Extract keywords from the project type, framework, and hosting clues.
+2. Use `gbrain_search` to find past deploy setups, platform-specific configurations, or known gotchas.
+3. Use `gbrain_get` to read the top 3 matches.
+4. Use this context to anticipate platform-specific requirements.
+
+If gbrain tools are not available or return no results, proceed without brain context.
+
+---
+
 ## Step 1: Check Existing Config
 
 ```bash
@@ -134,3 +147,4 @@ Status command: {status-command}
 Deploy config written to AGENTS.md.
 /skill:land-and-deploy will use these settings when shipping.
 ```
+

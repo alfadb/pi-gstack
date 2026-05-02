@@ -20,6 +20,19 @@ Review a plan for developer-facing products (APIs, CLIs, SDKs, libraries, platfo
 4. **Documentation is code.** Docs that rot, examples that don't compile, guides that skip steps — these are bugs, not content issues.
 5. **Convention over configuration.** Every decision you don't force the developer to make is a gift.
 
+## Brain Context Load
+
+Before the DX review, search your brain for developer experience context:
+
+1. Extract keywords from the API/CLI/SDK being reviewed and the developer persona.
+2. Use `gbrain_search` to find past DX reviews, competitor benchmarks, or API design decisions.
+3. Use `gbrain_get` to read the top 3 matches.
+4. Use this context to ground your scores — don't re-benchmark against competitors already evaluated.
+
+If gbrain tools are not available or return no results, proceed without brain context.
+
+---
+
 ## The Seven DX Characteristics
 
 | Characteristic | Litmus Test |
@@ -223,3 +236,5 @@ Write to `$DX_PATH`:
 ## TTHW Estimate
 Current: {estimate from plan} → Target: {world-class target}
 ```
+
+

@@ -246,21 +246,6 @@ Mark: VERIFIED (confirmed via code tracing) / UNVERIFIED (pattern match only) / 
 
 ---
 
-## Save Results to Brain
-
-After the security audit, persist findings:
-
-1. Use `gbrain_put` with:
-   - slug: `security-audit-<date>` (e.g. `security-audit-2026-05-01`)
-   - title: `"Security Audit: <date>"`
-   - tags: `"security-audit,<date>,<project-slug>"`
-   - content: findings and remediation status in markdown
-2. Note how many brain pages were found and whether any save was throttled.
-
-If gbrain tools are not available, skip this step.
-
----
-
 ## Output Format
 
 **Exploit scenario requirement:** Every finding MUST include a concrete exploit scenario — step-by-step attack path. "This pattern is insecure" is not a finding.

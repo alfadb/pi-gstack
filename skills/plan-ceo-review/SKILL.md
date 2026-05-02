@@ -206,15 +206,3 @@ Write to `$PLAN_PATH`:
 
 ---
 
-## Save Results to Brain
-
-After the CEO review, persist the plan:
-
-1. Use `gbrain_put` with:
-   - slug: `ceo-plan-<feature-slug>` (e.g. `ceo-plan-payment-v2`)
-   - title: `"CEO Plan: <feature name>"`
-   - tags: `"ceo-plan,<feature-slug>,<project-slug>"`
-   - content: scope decisions and vision in markdown
-2. Note how many brain pages were found in the initial search.
-
-If gbrain tools are not available, skip this step.

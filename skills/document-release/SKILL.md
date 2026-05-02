@@ -9,6 +9,19 @@ compatibility: requires git
 
 Run after `/ship` — ensure every documentation file is accurate against the current diff.
 
+## Brain Context Load
+
+Before updating docs, search your brain for documentation context:
+
+1. Extract keywords from changed modules and doc files.
+2. Use `gbrain_search` to find past doc releases, known stale docs, or documentation conventions.
+3. Use `gbrain_get` to read the top 3 matches.
+4. Use this context to identify docs that frequently go stale.
+
+If gbrain tools are not available or return no results, proceed without brain context.
+
+---
+
 ## Step 1: Diff Analysis
 
 ```bash
@@ -73,3 +86,4 @@ Docs found: N | Auto-fixed: N | ASK: N
   CHANGELOG.md: [CURRENT / POLISHED wording]
 ─────────────────────────────────
 ```
+

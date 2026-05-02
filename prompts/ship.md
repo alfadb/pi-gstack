@@ -203,21 +203,6 @@ gh pr edit --title "$PR_TITLE" --body "$PR_BODY"
 
 ---
 
-## Save Results to Brain
-
-After shipping, persist release notes:
-
-1. Use `gbrain_put` with:
-   - slug: `release-<version>` (e.g. `release-1.2.3`)
-   - title: `"Release: <version>"`
-   - tags: `"release,<version>,<project-slug>"`
-   - content: changelog entry and deploy details in markdown
-2. Note how many brain pages were found in the initial search.
-
-If gbrain tools are not available, skip this step.
-
----
-
 ## Step 11: Output summary
 
 ```

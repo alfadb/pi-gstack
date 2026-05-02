@@ -4,7 +4,7 @@
 
 上游仓库已作为 submodule 存放在 `vendor/gstack/`。
 
-基准 commit: `454423a` (v1.21.1.0, 2026-04-30)
+基准 commit: `b512be7` (v1.25.1.0, 2026-04-30)
 
 | pi-gstack 文件 | 形式 | 上游来源 | 迁移日期 |
 |---------------|------|---------|---------|
@@ -43,109 +43,90 @@
 | `skills/cso/references/owasp-top10.md` | Reference | `garrytan/gstack` `cso/SKILL.md` Phase 9 (extracted) | 2026-04-30 |
 | `skills/cso/SKILL.md` (Phase 5,11,12) | Enhancement | `garrytan/gstack` `cso/SKILL.md` Phases 5,11,12 | 2026-05-01 |
 | `prompts/ship.md` (step numbering, path refs) | Fix | review feedback — pi-native path references | 2026-05-01 |
+| 全部 19 个 skill + ship (gbrain 集成) | Enhancement | Brain Context Load（gbrain_search/gbrain_get）。Save Results 由 pi-sediment 自动处理 | 2026-05-02 |
 
 ## 跟进方法
 
-### 1. 拉取上游最新代码
+**核心原则：不要机械化 diff 对比文件列表。把上游完整 diff 交给 LLM 推理哪些变更对 pi-gstack 有实际价值。**
+
+pi-gstack 不是 gstack 的 1:1 文件副本——它剥离了 preamble/telemetry 等 Claude Code 基础设施，改了工具名（browse_* 替代 $B，gbrain_search/gbrain_get 替代 gbrain CLI），review/ship 等剥离了 Codex/Agent subagent。Save Results 由 pi-sediment 自动处理。所以「文件 A 改了所以文件 A' 也要改」的逻辑不成立。
+
+### 1. 拉取上游
 
 ```bash
 cd vendor/gstack
 git fetch origin main
-git checkout main && git pull origin main
+git checkout main && git pull --ff-only origin main
 ```
 
-### 2. 扫描所有已移植文件的变更
+### 2. 获取上游完整 diff
 
 ```bash
-BASE_COMMIT=e8893a1
-
-# ── Skills（19 个）──
-for skill in \
-  office-hours autoplan \
-  plan-ceo-review plan-eng-review plan-design-review plan-devex-review \
-  review investigate cso \
-  qa qa-only \
-  retro document-release land-and-deploy \
-  canary scrape health benchmark setup-deploy; do
-  echo ""
-  echo "══════ $skill ══════"
-  changes=$(git log $BASE_COMMIT..HEAD --oneline -- "$skill/SKILL.md" 2>/dev/null)
-  if [ -n "$changes" ]; then
-    echo "$changes"
-    # 自动生成逐文件 diff 摘要
-    git diff $BASE_COMMIT..HEAD --stat -- "$skill/SKILL.md" 2>/dev/null
-  else
-    echo "  (no changes)"
-  fi
-done
-
-# ── Prompt Template ──
-echo ""
-echo "══════ ship (prompt template) ══════"
-git log $BASE_COMMIT..HEAD --oneline -- "ship/SKILL.md" 2>/dev/null || echo "  (no changes)"
-
-# ── Reference 文件 ──
-echo ""
-echo "══════ reference files ══════"
-for ref in \
-  "review/checklist.md" \
-  "review/specialists/testing.md" \
-  "review/specialists/security.md" \
-  "review/specialists/performance.md" \
-  "review/specialists/maintainability.md" \
-  "review/specialists/api-contract.md" \
-  "review/specialists/data-migration.md" \
-  "review/specialists/red-team.md" \
-  "qa/references/issue-taxonomy.md" \
-  "qa/templates/qa-report-template.md" \
-  "plan-devex-review/dx-hall-of-fame.md"; do
-  changes=$(git log $BASE_COMMIT..HEAD --oneline -- "$ref" 2>/dev/null)
-  [ -n "$changes" ] && echo "CHANGED: $ref — $changes"
-done
-
-# ── Browse 扩展源码 ──
-echo ""
-echo "══════ browse extension ══════"
-git log $BASE_COMMIT..HEAD --oneline -- "browse/src/" 2>/dev/null || echo "  (no changes)"
+# 从记录的基准 commit 到当前 HEAD 的完整 diff（不含测试/CI/无关目录）
+BASE_COMMIT=<从本文件读>
+git diff $BASE_COMMIT..HEAD -- . \
+  ':!test/' ':!.github/' ':!.gitlab-ci.yml' ':!CHANGELOG.md' \
+  ':!TODOS.md' ':!docs/' ':!bun.lock' ':!package.json' \
+  > /tmp/gstack-upstream.diff
+wc -l /tmp/gstack-upstream.diff
 ```
 
-### 3. 查看具体 diff
+### 3. LLM 分析 diff + 决定应用范围
 
-```bash
-# 查看某个 skill 的完整 diff
-git diff $BASE_COMMIT..HEAD -- review/SKILL.md
+把 diff 交给 LLM，同时提供以下上下文：
 
-# 只看新增/修改的章节标题（快速了解结构性变更）
-git diff $BASE_COMMIT..HEAD -- review/SKILL.md | grep '^+##'
-```
+- pi-gstack 的架构概述（READ ME.md 中的「与 gstack 的差异」部分）
+- 当前 UPSTREAM.md 中记录的映射关系
+- pi 的工具集（bash/read/edit/write/grep/find, browse_* 扩展, gbrain_*）
 
-### 4. 逐项评估并应用
+让 LLM 回答三个问题：
 
-对每个有变更的文件：
+1. **哪些变更是纯基础设施**（gstack 内部路径、遥测、Claude Code 特有机制如 AskUserQuestion/plan-mode/Agent subagent/Codex CLI）→ **跳过**
+2. **哪些变更是方法论增强**（工作流步骤改进、检查项增加、判定逻辑增强、STOP gate 强化）→ **评估是否适用于 pi**
+3. **方法论变更中，pi-gstack 已有对等模块的，diff 应该如何适配**（替换工具名、剥离基础设施引用、保留核心逻辑）
 
-1. **读 diff**：理解上游改了什么（方法论增强？bug 修复？措辞优化？）
-2. **判断适用性**：
-   - **方法论变更** → 值得移植到 pi-gstack
-   - **gstack 基础设施变更**（preamble/telemetry/hook） → 忽略
-   - **模型覆盖层/调谐**（model-overlay/plan-tune） → pi 无对等概念，忽略
-3. **应用变更**：手动编辑 pi-gstack 对应文件，保持：
-   - pi 原生工具名（`bash/read/edit/write/grep/find`）
-   - gstack 兼容的输出路径（`~/.gstack/projects/$SLUG/...`）
-   - 剥离 preamble/telemetry/gbrain 等基础设施段
-4. **更新本文件**：将 `BASE_COMMIT` 更新为当前 `origin/main` 的 HEAD
+### 4. 应用变更
+
+根据 LLM 的判断，对 pi-gstack 对应文件做精确编辑：
+- 保持 pi 原生工具名
+- 保持 gstack 兼容输出路径（`~/.gstack/projects/$SLUG/...`）
+- 剥离 preamble/telemetry/gbrain/Codex/Agent 引用
+- 如果 pi 没有对应模块（如 Codex adversarial review），方法论有价值的可以新建，否则跳过
 
 ### 5. 收尾
 
-```bash
-# 更新基准 commit
-cd vendor/gstack
-NEW_BASE=$(git rev-parse --short HEAD)
-cd ../..
-sed -i "s/基准 commit: \`.*\`/基准 commit: \`$NEW_BASE\`/" UPSTREAM.md
+**必须更新两个文件：**
 
-# 提交
-git add UPSTREAM.md <changed-skill-files>
-git commit -m "chore: follow upstream gstack to $NEW_BASE"
+1. **UPSTREAM.md**：顶部 `基准 commit` + 底部新增 `跟进记录` 条目
+2. **README.md**：顶部 `上游版本` + `最后跟进` 日期
+
+```bash
+cd vendor/gstack
+NEW_VER=$(cat VERSION)
+cd ../..
+# 更新 UPSTREAM.md 基准 commit 和跟进记录
+# 更新 README.md 上游版本号和日期
 ```
 
-后续跟进后将 `UPSTREAM.md` 中的 commit 更新为新基准。
+## 跟进记录
+
+### 2026-05-02: v1.21.1.0 → v1.25.1.0 (b512be7)
+
+**上游变更概览**（4 个版本，99 files，+3626/-237）：
+- v1.23.0.0: PR 标题版本前缀
+- v1.24.0.0: 跨平台加固（claude-bin.ts、gstack-paths、import.meta.main guard）
+- v1.25.0.0: AskUserQuestion/MCP 解析（触及全部 19 个 skill）
+- v1.25.1.0: office-hours Phase 4 STOP gate 强化 + adversarial review recommendation 格式
+
+**LLM 分析结论：**
+- 跳过：AskUserQuestion/MCP 解析（pi 无此机制）、gstack-paths（pi 无状态目录）、claude-bin.ts（pi browse 扩展架构不同）、security-classifier（pi 不调用 claude CLI）、PR 标题前缀（gstack 特有版本约定）、adversarial review（pi-gstack 已剥离 Codex/Agent subagent）
+- 应用：office-hours Phase 4 STOP gate（纯方法论——推荐理由必须映射到创始人目标、Phase 4 后强制等待用户批准才进入 Phase 5）
+
+**pi-gstack 变更：**
+- `skills/office-hours/SKILL.md`: RECOMMENDATION 理由要求映射到 founder's stated goal；新增 STOP gate 阻止跳过用户批准直接生成设计文档
+
+### 2026-05-02: gbrain 集成（全部 19 个 skill + ship prompt）
+
+**Brain Context Load（保留）：** 为所有缺失 skill 添加启动前 gbrain 搜索。全部 19 个 skill + ship prompt 均已覆盖。
+
+**Save Results to Brain（删除）：** pi-sediment 自动覆盖此功能——每轮对话后 evaluator 判定价值 → Pensieve + gbrain 双写。手动 `gbrain_put` 指令冗余，已全部移除。

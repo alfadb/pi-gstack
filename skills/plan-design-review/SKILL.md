@@ -207,21 +207,6 @@ Write to `$DESIGN_REVIEW_PATH`:
 
 ---
 
-## Save Results to Brain
-
-After the design review, persist decisions:
-
-1. Use `gbrain_put` with:
-   - slug: `design-review-<feature-slug>` (e.g. `design-review-onboarding-v2`)
-   - title: `"Design Review: <feature name>"`
-   - tags: `"design-review,<feature-slug>,<project-slug>"`
-   - content: ratings and critical fixes in markdown
-2. Note how many brain pages were found in the initial search.
-
-If gbrain tools are not available, skip this step.
-
----
-
 ## Design Debt
 {issues noted but not blocking — for future iteration}
 ```

@@ -4,6 +4,8 @@ gstack 方法论移植到 [pi-coding-agent](https://github.com/badlogic/pi-mono)
 
 灵感来自 [garrytan/gstack](https://github.com/garrytan/gstack) — Garry Tan 的 Claude Code 工作流。
 
+**上游版本:** v1.25.1.0 · **最后跟进:** 2026-05-02 · **跟进记录:** [UPSTREAM.md](UPSTREAM.md)
+
 ## 安装
 
 ```bash
@@ -28,6 +30,24 @@ git submodule add https://github.com/alfadb/pi-gstack agent/skills/pi-gstack
 cd agent/skills/pi-gstack/extensions/browse
 npm install
 npx playwright install chromium
+```
+
+### 推荐：安装 pi-sediment（自动沉淀引擎）
+
+[pi-sediment](https://github.com/alfadb/pi-sediment) 在每轮对话后自动评估价值，将项目级洞察写入 Pensieve、通用工程原则写入 gbrain。pi-gstack 的 Save Results 完全由它接管，无需手动 `gbrain_put`。
+
+```bash
+pi install git:github.com/alfadb/pi-sediment
+```
+
+配置 `settings.json`：
+
+```json
+{
+  "extensions": [
+    "~/.pi/agent/skills/pi-sediment/extensions/pi-sediment"
+  ]
+}
 ```
 
 ## Skills（模型可主动加载）
@@ -119,6 +139,7 @@ npx playwright install chromium
 - 用 pi 内建工具（read/bash/edit/write/grep/find）和 pi 生态（extensions + browser-tools）
 - 方法论核心保留，基础设施用 pi extension 重写
 - browse 扩展从 gstack browse daemon 移植，适配为 pi registerTool 工具
+- gbrain 集成：全部 19 个 skill 内置 Brain Context Load（启动前 `gbrain_search`/`gbrain_get`），使用 pi 原生 gbrain 工具。持久化由 [pi-sediment](https://github.com/alfadb/pi-sediment) 自动处理（每轮对话后 evaluator 判定 → Pensieve + gbrain 双写），无需手动 `gbrain_put`。
 - 上游追踪见 `UPSTREAM.md`，原始参考 `vendor/gstack/`
 
 ## 许可

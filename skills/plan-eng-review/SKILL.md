@@ -151,15 +151,3 @@ Architecture > Test Plan > Code Quality > Performance. If context is tight, keep
 
 ---
 
-## Save Results to Brain
-
-After the review, persist architecture decisions:
-
-1. Use `gbrain_put` with:
-   - slug: `eng-review-<feature-slug>` (e.g. `eng-review-auth-refactor`)
-   - title: `"Eng Review: <feature name>"`
-   - tags: `"eng-review,<feature-slug>,<project-slug>"`
-   - content: review findings and decisions in markdown
-2. Note how many brain pages were found in the initial search.
-
-If gbrain tools are not available, skip this step.

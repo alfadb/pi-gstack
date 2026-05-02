@@ -9,6 +9,19 @@ compatibility: requires git and gh CLI
 
 Picks up where `/ship` left off. Merge the PR, wait for CI, verify production.
 
+## Brain Context Load
+
+Before deploying, search your brain for deployment context:
+
+1. Extract keywords from the PR title, branch name, and changed services.
+2. Use `gbrain_search` to find past deploys, known deploy issues, or post-deploy incidents.
+3. Use `gbrain_get` to read the top 3 matches.
+4. Use this context to anticipate risks — has this service or dependency caused deploy failures before?
+
+If gbrain tools are not available or return no results, proceed without brain context.
+
+---
+
 ## Arguments
 
 - `/skill:land-and-deploy` — auto-detect PR from current branch
@@ -107,3 +120,4 @@ Deploy:   ✅ verified (<url> — HTTP 200)
 VERDICT: CLEAN — production healthy
 ═══════════════════════════════
 ```
+
