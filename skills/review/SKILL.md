@@ -175,9 +175,9 @@ Apply the CRITICAL categories from the checklist against the full diff:
 
 Read `references/checklist.md` for the full list: Async/Sync Mixing, Column/Field Name Safety, LLM Prompt Issues, Type Coercion at Boundaries, View/Frontend patterns, Time Window Safety, Completeness Gaps, Distribution & CI/CD.
 
-## Step 5: Specialist Reviews
+## Step 5: Parallel Specialist Reviews (pi-multi-agent)
 
-For diffs > 50 lines, apply specialist checklists sequentially against the diff. Each specialist review is an independent pass — read the specialist file, apply its checklist to the diff, record findings.
+For diffs > 50 lines, dispatch specialists in parallel across different models via `/multi-review`.
 
 | Specialist | Reference | Trigger |
 |-----------|-----------|---------|
@@ -189,13 +189,20 @@ For diffs > 50 lines, apply specialist checklists sequentially against the diff.
 | API Contract | `references/api-contract.md` | API/route/controller files changed |
 | Red Team | `references/red-team.md` | >200 lines OR any CRITICAL finding |
 
-For each triggered specialist:
-1. Read the specialist reference file
-2. Apply its checklist against the diff
-3. Record findings with specialist tag (e.g., `specialist: testing`)
-4. Dedup findings that overlap with the critical pass — keep the highest confidence version, boost by +1 if confirmed by multiple passes
+### Procedure
 
-If diff < 50 lines: skip specialists. Print: "Small diff — specialists skipped."
+1. **Read checklists** — for each triggered specialist, read its reference file. Store the content as `{NAME}_CHECKLIST` (e.g., `TESTING_CHECKLIST`).
+2. **Get diff** — the diff was already computed in Step 3 (`git diff origin/<base>`). Store as `{DIFF}`.
+3. **Execute** `/multi-review` (expands to `multi_dispatch` with predefined model assignments per specialist).
+4. **Process results** as described in the template:
+   - Dedup overlapping findings, keep highest confidence version
+   - Cross-model confirmation: same finding reported by ≥2 models → confidence +2
+   - Contradictory findings: flag `[MODEL-DISAGREE]` with each model's position
+   - Merge all findings into main review output with specialist source tag
+
+If pi-multi-agent is not available (multi_dispatch tool not found), fall back to sequential: read each specialist file, apply its checklist against the diff, record findings with `specialist: <name>` tag.
+
+If diff < 50 lines: skip. Print: "Small diff — specialists skipped."
 
 ## Step 6: Confidence Calibration
 
