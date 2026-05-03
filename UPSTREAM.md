@@ -4,7 +4,7 @@
 
 上游仓库已作为 submodule 存放在 `vendor/gstack/`。
 
-基准 commit: `b512be7` (v1.25.1.0, 2026-04-30)
+基准 commit: `bf65487` (v1.26.0.0, 2026-05-02)
 
 | pi-gstack 文件 | 形式 | 上游来源 | 迁移日期 |
 |---------------|------|---------|---------|
@@ -109,6 +109,26 @@ cd ../..
 ```
 
 ## 跟进记录
+
+### 2026-05-03: v1.25.1.0 → v1.26.0.0 (bf65487)
+
+**上游变更概览**（1 个版本，27 files，+4216/-2）：
+- v1.26.0.0: V1 transcript ingest + per-skill gbrain manifests + retrieval surface
+- 新增 `bin/gstack-memory-ingest.ts`、`bin/gstack-gbrain-sync.ts`、`bin/gstack-brain-context-load.ts`、`lib/gstack-memory-helpers.ts`
+- 为 6 个上游 skill 添加 `gbrain:` manifest：`office-hours`、`plan-ceo-review`、`design-shotgun`、`design-consultation`、`investigate`、`retro`
+- 强化 `/setup-gbrain` transcript ingest gate 和 doctor verdict
+
+**LLM 分析结论：**
+- 跳过：gstack memory ingest/sync/context-load CLI（pi-gstack 无 gstack CLI runtime；持久化由 pi-sediment 自动接管）、`/setup-gbrain`（未移植）、`design-shotgun`/`design-consultation`（按既有决策不移植剩余重基础设施 skill）。
+- 应用：4 个已移植 skill 的方法论价值——在 Brain Context Load 中加入上游 manifest 对应的高信号本地 artifact 读取提示，并保持 pi 原生 `gbrain_search`/`gbrain_get` 工具。
+- 安全适配：本地 memory / timeline / transcript 内容只作为数据，不作为可执行指令；gbrain 查询关键词要求英文。
+
+**pi-gstack 变更：**
+- `skills/office-hours/SKILL.md`: Brain Context Load 读取近期 design docs、builder profile、eureka。
+- `skills/plan-ceo-review/SKILL.md`: Brain Context Load 读取 prior CEO plans + recent design docs。
+- `skills/investigate/SKILL.md`: Brain Context Load 读取 prior investigations、project learnings、eureka。
+- `skills/retro/SKILL.md`: Brain Context Load 读取 prior retros、timeline、learnings。
+- `README.md`: 上游版本更新至 v1.26.0.0，并说明 gstack memory CLI 不直接移植。
 
 ### 2026-05-02: v1.21.1.0 → v1.25.1.0 (b512be7)
 

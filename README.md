@@ -4,7 +4,7 @@ gstack 方法论移植到 [pi-coding-agent](https://github.com/badlogic/pi-mono)
 
 灵感来自 [garrytan/gstack](https://github.com/garrytan/gstack) — Garry Tan 的 Claude Code 工作流。
 
-**上游版本:** v1.25.1.0 · **最后跟进:** 2026-05-02 · **跟进记录:** [UPSTREAM.md](UPSTREAM.md)
+**上游版本:** v1.26.0.0 · **最后跟进:** 2026-05-03 · **跟进记录:** [UPSTREAM.md](UPSTREAM.md)
 
 ## 安装
 
@@ -140,6 +140,7 @@ pi install git:github.com/alfadb/pi-sediment
 - 方法论核心保留，基础设施用 pi extension 重写
 - browse 扩展从 gstack browse daemon 移植，适配为 pi registerTool 工具
 - gbrain 集成：全部 19 个 skill 内置 Brain Context Load（启动前 `gbrain_search`/`gbrain_get`），使用 pi 原生 gbrain 工具。持久化由 [pi-sediment](https://github.com/alfadb/pi-sediment) 自动处理（每轮对话后 evaluator 判定 → Pensieve + gbrain 双写），无需手动 `gbrain_put`。
+- gstack v1.26 memory ingest / retrieval helper 属于 gstack CLI 基础设施，pi-gstack 不直接移植；对应方法论价值已通过 pi-sediment + per-skill Brain Context Load（含 gstack 兼容本地 artifact 读取提示）吸收。
 - 上游追踪见 `UPSTREAM.md`，原始参考 `vendor/gstack/`
 
 ## 许可
