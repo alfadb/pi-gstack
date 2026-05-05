@@ -83,7 +83,7 @@ Severity: CRITICAL for active secret patterns (AKIA, sk_live_, ghp_).
 If `multi_dispatch` is available, parallelize compatible phases across different models:
 
 1. Gather context from all completed phases (Phase 0-2 output + attack surface map + architecture summary)
-2. Execute `/multi-cso` — dispatches Phases 3, 5-11 as independent parallel tasks, each with a specialist model (security → opus-4-7, infrastructure → deepseek-v4-pro, OWASP/STRIDE → gpt-5.5-pro)
+2. Execute `/multi-cso` — dispatches Phases 3, 5-11 as independent parallel tasks. Specialist models are chosen by the main LLM from the curated `Available models (curated)` snapshot (injected by pi-model-curator) — match each phase's reasoning need (deep reasoning vs structured analysis vs lightweight classification) to a model whose capability hint fits, and diversify provider across phases to avoid shared blind spots
 3. Merge findings back into the main audit output
 
 If unavailable, proceed with sequential phase execution below.
